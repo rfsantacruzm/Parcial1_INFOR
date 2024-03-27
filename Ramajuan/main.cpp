@@ -157,3 +157,30 @@ void rotarmatriz3(int n){
     }
     delete[] p;
 }
+
+
+int *buscar_posicion(const int *clave, int siguiente_matriz){
+    int *ptr=new int[2];
+    int fila=clave[0], columna=clave[1];
+    if (siguiente_matriz==1){
+        fila+=1;
+        columna+=1;
+    }else if(siguiente_matriz==-1){
+        fila-=1;
+        columna-=1;
+    }
+    ptr[0]=fila;
+    ptr[1]=columna;
+    return ptr;
+}
+
+
+
+
+
+
+
+
+
+
+
