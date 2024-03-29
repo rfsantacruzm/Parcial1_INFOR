@@ -1,1 +1,37 @@
-hola
+Descripción de Funciones
+
+int definirtamano(int* c)
+
+Esta función recibe como parámetro un puntero a un arreglo, el cual contiene la clave ingresada por el usuario. Al analizar el contenido del arreglo (las 2 primeras posiciones), verifica cual de los dos valores almacenados es mayor, una vez tenga este dato, verifica si es par o impar (dado que las matrices deben ser cuadradas, con dimensión impar), dado el caso de ser par, se suma una unidad y se retorna un entero que representa la dimensión (tamaño) de la matriz cuadrada.
+
+void imprimirmatriz(int** p, int n)
+
+Esta función permite imprimir la matriz posición por posición, esta tiene como parámetros un doble puntero y un entero, el puntero contiene la matriz a imprimir, y el entero es la dimensión de esta que se usa como condición para el ciclo que se desarrolla en esta.
+
+int** crearMatriz(int n)
+
+Esta función crea la matriz recibiento un entero n que es la dimensión de a matriz y genera un arreglo dinámico con los números del 1 al 24 y lo rellena de izquierda a derecha fila por fila dejando en el centro de la matriz el 0 (elemento neutro). Retorna un doble puntero.
+
+int** rotarmatriz1(int** p, int n)
+
+Esta función recibe el puntero de un arreglo dinámico (matriz) y un entero n (tamaño) y realiza una rotación anti-horaria, de tal manera que empiece a rellenar la matriz de abajo a arriba, desde la columna 1 hasta la columna n, el 0 no se mueve. Retorna un puntero a la matriz.
+
+int** rotarmatriz2(int** p, int n)
+
+Esta función recibe el puntero de un arreglo dinámico (matriz) y un entero n (tamaño) y realiza una rotación anti-horaria, de tal manera que empiece a rellenar la matriz de derecha a izquierda, desde la fila n hasta la 1, el 0 no se mueve. Retorna un puntero a la matriz.
+
+int** rotarmatriz3(int** p, int n)
+
+Esta función recibe el puntero de un arreglo dinámico (matriz) y un entero n (tamaño) y realiza una rotación anti-horaria, de tal manera que empiece a rellenar la matriz de arriba a abajo, desde la columna n hasta la columna 1, el 0 no se mueve. Retorna un puntero a la matriz.
+
+int **matrizfondomenor (int tamano, int v, int fila, int columna)
+
+Esta función se encarga de generar una matriz que cumpla la condición de valor menor (-1) en la poscición buscada, recibe como parámetros el tamaño de esta nueva matriz, el valor en la posición deseada de la matriz inmediatamente anterior, valor de fila y columna de la posición del valor que se quiere comparar. Hace uso de las funciones crearMatriz y las de rotaciones. Retorna un puntero a un arreglo dinámico.
+
+int **matrizfondomayor (int tamano, int v, int fila, int columna)
+
+Al igual que la función matrizfondomenor, esta función busca cumplir con una condición, en este caso que el valor en la posición sea mayor al de la matriz anterior (1). Recibe como parámetros el tamaño de esta nueva matriz, el valor en la posición deseada de la matriz inmediatamente anterior, valor de fila y columna de la posición del valor que se quiere comparar. Hace uso de las funciones crearMatriz y las de rotaciones. Retorna un puntero a un arreglo dinámico.
+
+int *buscar_posicion(const int *clave, int siguiente_matriz)
+
+Esta función se encarga de encontrar la posición equivalente en la siguiente matriz dado que las matrices están alineadas por el centro. Tiene como parámetros, un puntero que señala al arreglo de la clave, así como un entero que indica la condición que debe cumplir la siguiente matriz, de tal forma que se pueda conocer si se debe disminuir, conservar o aumentar el tamaño de la matriz y así calcular la posición equivalente en la siguiente matriz. Retorna un arreglo de tamaño 2 que contiene el valor de fila y columna respectivamente.
