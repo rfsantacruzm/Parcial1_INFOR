@@ -8,16 +8,17 @@ int saber_dimencion_matriz( int *clave);
 int** rotarmatriz1(int n);
 int** rotarmatriz2(int n);
 int** rotarmatriz3(int n);
-int *buscar_posicion(const int *clave, int siguiente_matriz);
-void imprimir_matriz(const int** matriz, int dimencion);
+int *buscar_posicion( int *clave, int siguiente_matriz);
+void imprimir_matriz( int** matriz, int dimencion);
 bool comparar_matrices0(int **ptr1,  int **ptr2, int *clave, int *clave2 );
 bool comparar_matrices1(int **ptr1,  int **ptr2, int *clave, int *clave2 );
 bool comparar_matrices_menos(int **ptr1,  int **ptr2, int *clave, int *clave2 );
 void liberar_memoria(int **ptr, int n);
 int **matrices(int n, int rotar);
-
+int *candado(int dimencion1, int *posicion1, int *posicion2);
 int main(){
     int n,k, con=0, valor1=0, valor2=0;
+    int* ptr1 = nullptr;
     cout << "Ingrese el tamano de la clave k: " <<endl;
     cin>> n;
     int* clave = new int[n];
@@ -46,43 +47,71 @@ int main(){
     int clave2[2];
     clave2[0]=clave[0]; clave2[1]=clave[1];
     //liberar memoria de clave
-    for (int i =1 ; i <n ; ++i) {
+    for (int i =2 ; i <n ; ++i) {
         //cout<<clave[i]<<endl;
-        con++;
-        if(clave[con]==1){
+        cout<<dimencion2<<endl;
+        cout<<valor1;
+        if(clave[i]==1){
+            int clave_temp[2];
+            clave_temp[0]=clave2[0];
+            clave_temp[1]=clave2[1];
+            while (verificar==false) {
 
-                int** anterior= matrices(dimencion, valor1);
-                int** siguiente=matrices(dimencion2, valor2);
-                int clave_temp[2]; clave_temp[0]=clave2[0]; clave_temp[1]=clave2[1];
-                bool duda=comparar_matrices1(anterior, siguiente, clave2, clave_temp );
-                liberar_memoria(anterior, dimencion);
-                liberar_memoria(siguiente, dimencion);
-                if(duda){
-                cout<<endl<<"Es mayor"<<endl;
-                //verificar=true;
-                }else{
-
-                    while (verificar==false) {
-                        for (int i = 0; i < 4; ++i) {
-                            for (int j = 0; j < 4; ++j) {
-                                int **anterior=matrices(dimencion, valor1);
-                            }
-                        }
+                for (int j = 0; j < 4; ++j) {
+                    int **anterior=matrices(5, 0);
+                    int **siguiente=matrices(7, 0);
+                    bool duda=comparar_matrices1(anterior, siguiente, clave2, clave_temp );
+                    liberar_memoria(anterior, dimencion);
+                    liberar_memoria(siguiente, dimencion2);
+                    if(duda){
+                        verificar=true;
+                        valor1=i;
+                        clave2[0]=ptr1[0];
+                        clave2[1]=ptr1[1];
+                        break;
+                    }else{
+                        //recordar liberar memoria
+                        int *ptr1=buscar_posicion(clave_temp, 1);
+                        clave_temp[0]=ptr1[0];
+                        clave_temp[1]=ptr1[1];
+                        delete[] ptr1;
                     }
+
                 }
 
-        }/*else if(i==0){
+                dimencion2+=2;
+                //con++;
+            }
 
-        }else if(i==-1){
+        }else if(clave[con]==-1){
+            while (verificar==false) {
+                dimencion2-=2;
+                for (int i = 0; i < 4; ++i) {
+                    int **anterior=matrices(dimencion, valor1);
+                    int **siguiente=matrices(dimencion2, i);
+                    int clave_temp[2]; clave_temp[0]=clave2[0]; clave_temp[1]=clave2[1];
+                    bool duda=comparar_matrices_menos(anterior, siguiente, clave2, clave_temp );
+                    liberar_memoria(anterior, dimencion);
+                    liberar_memoria(siguiente, dimencion2);
+                    if(duda){
+                        verificar=true;
+                        valor1=i;
+                        break;
+                    }
 
-        }*/
+                }
+
+                dimencion2-=2;
+            }
+        }
+
+
     }
 
     delete[] clave;
     return 0;
+
 }
-
-
 
 //recordar liberar memoria cuando se termine de usar la funcion
 int** matrizneutra(int n){
@@ -133,7 +162,20 @@ int saber_dimencion_matriz( int *clave){
         }else{
             return columna;
         }
+    }else if (fila==columna)
+    {
+        if(fila%2==0){
+            return fila+1;
+        }else{
+            return fila;
+        }
+    }else
+    {
+        return -1;
     }
+
+
+
 }
 
 //recordar liberar la memoria cuando se termine de usar la funcion
@@ -242,7 +284,7 @@ int** rotarmatriz3(int n){
 }
 
 //recordar liberar la memoria cuando se termine de usar la funcion
-int *buscar_posicion(const int *clave, int siguiente_matriz){
+int *buscar_posicion( int *clave, int siguiente_matriz){
     int *ptr=new int[2];
     int fila=clave[0], columna=clave[1];
     if (siguiente_matriz==1){
@@ -251,6 +293,9 @@ int *buscar_posicion(const int *clave, int siguiente_matriz){
     }else if(siguiente_matriz==-1){
         fila-=1;
         columna-=1;
+    }else{
+        fila=fila;
+        columna=columna;
     }
     ptr[0]=fila;
     ptr[1]=columna;
@@ -258,7 +303,7 @@ int *buscar_posicion(const int *clave, int siguiente_matriz){
 }
 
 
-void imprimir_matriz(const int** matriz, int dimencion){
+void imprimir_matriz( int** matriz, int dimencion){
     for (int i = 0; i < dimencion; ++i) {
         for (int j = 0; j < dimencion; ++j) {
             cout<<matriz[i][j]<<'\t';
@@ -268,14 +313,14 @@ void imprimir_matriz(const int** matriz, int dimencion){
 }
 
 bool comparar_matrices0(int **ptr1,  int **ptr2, int *clave, int *clave2 ){
-   int  fila=clave[0], fila2=clave2[0];
-   int columna=clave[1], columna2=clave2[1];
-   if(ptr1[fila][columna]==ptr2[fila2][columna2]){
-       return true;
+    int  fila=clave[0], fila2=clave2[0];
+    int columna=clave[1], columna2=clave2[1];
+    if(ptr1[fila][columna]==ptr2[fila2][columna2]){
+        return true;
 
-   }else{
-       return false;
-   }
+    }else{
+        return false;
+    }
 
 }
 
@@ -306,9 +351,10 @@ bool comparar_matrices_menos(int **ptr1,  int **ptr2, int *clave, int *clave2 ){
 
 void liberar_memoria(int **ptr, int n){
     for (int i = 0; i < n; ++i) {
-        delete ptr[i];
+        delete[] ptr[i];
     }
     delete[] ptr;
+    ptr = nullptr;
 }
 
 
@@ -447,12 +493,41 @@ int **matrices(int n, int rotar){
         }
         return p;
 
+    }else{
+        return nullptr;
     }
-
-
 
 
 }
 
 
+int *candado(int dimencion1, int *posicion1, int *posicion2){
+    int temp=0, dimencion2=dimencion1;  bool verificar, interno=false;
+    while(interno==false){
+        for (int i = 0; i < 4; i++)
+        {
+            int **anterior=matrices(dimencion1, temp);
+            int **siguiente=matrices(dimencion2, i);
+            bool verificar= comparar_matrices1(anterior, siguiente, posicion1, posicion2);
+            liberar_memoria(anterior, dimencion1);
+            liberar_memoria(siguiente, dimencion2);
+            if (verificar)
+            {
+                dimencion1=dimencion2;
+                temp=i;
+                interno=true;
+                break;
+            }
 
+        }
+
+        if(interno==false){
+            posicion2=buscar_posicion(posicion2, 1);
+            dimencion2=saber_dimencion_matriz(posicion2);
+            dimencion2+=2;
+        }
+    }
+    int *pr=new int[4];
+    pr[0]=dimencion2; pr[1]=temp; pr[2]=posicion2[0]; pr[3]=posicion2[1];
+    return pr;
+}
