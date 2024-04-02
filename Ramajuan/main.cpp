@@ -13,7 +13,7 @@ int **matrices(int n, int rotar);
 int *candado(int dimencion1, int *posicion1, int *posicion2);
 
 int main(){
-    int n,k, con=0, valor1=0, valor2=0;
+    int n,k, con=1, valor1=0, valor2=0;
     int* ptr1 = nullptr;
     cout << "Ingrese el tamano de la clave k: " <<endl;
     cin>> n;
@@ -33,27 +33,36 @@ int main(){
                 cin>>k;
                 clave[i] = k;
             }
-
-
         }
     }
     int dimencion=saber_dimencion_matriz(clave);
     //dimencion2 es la dimencion de la matriz siguiente
-    int dimencion2=dimencion;
-    //dimencion2+=2;
-    int clave2[2];
-    clave2[0]=clave[0]; clave2[1]=clave[1];
+    //int dimencion2=dimencion+2;
+    int clave2[2], temp[2];
+    clave2[0]=clave[0]-1; clave2[1]=clave[1]-1; temp[0]=clave[0]-1; temp[1]=clave[1]-1;
     //liberar memoria de clave
+    int *x=new int[k-1];
+    x[0]=dimencion;
+    int *rotaciones=new int[k-1];
+    rotaciones[0]=0;
     for (int i =2 ; i <n ; ++i) {
-        //cout<<clave[i]<<endl;
-        //cout<<valor1;
         if(clave[i]==1){
+            int *pr= candado(dimencion, clave2, temp);
+            x[con]=pr[0];
+            rotaciones[con]=pr[1];
+            clave2[0]=pr[2];
+            clave2[1]=pr[3];
+            temp[0]=clave2[0]; temp[1]=clave2[1];
+            dimencion=x[con];
+            con++;
+        } else if(clave[i]==-1){
 
-
-        }else if(clave[con]==-1){
+        }else if (clave[i]==0)
+        {
 
         }
-
+        cout<<x[0]<<" "<<x[1]<<" "<<x[2]<<" "<<x[3]<<" "<<endl;
+        cout<<rotaciones[0]<<" "<<rotaciones[1]<<" "<<rotaciones[2]<<" "<<rotaciones[3]<<" "<<endl;
 
     }
 
@@ -145,11 +154,11 @@ bool comparar_matrices0(int **ptr1,  int **ptr2, int *clave, int *clave2 ){
 
 bool comparar_matrices1(int **ptr1,  int **ptr2, int *clave, int *clave2 ){
     int  fila=clave[0], fila2=clave2[0];
-    fila-=1; fila2-=1;
+    //fila-=1; fila2-=1;
     //cout<<fila<<" "<<fila2<<endl;
     int columna=clave[1], columna2=clave2[1];
-    columna-=1; columna2-=1;
-    //cout<<columna<<" "<<columna2<<endl;
+    //columna-=1; columna2-=1;
+    //cout<<ptr1[fila][columna]<<" < "<<ptr2[fila2][columna2]<<endl;
     if(ptr1[fila][columna]<ptr2[fila2][columna2]){
         return true;
 
@@ -162,9 +171,9 @@ bool comparar_matrices1(int **ptr1,  int **ptr2, int *clave, int *clave2 ){
 
 bool comparar_matrices_menos(int **ptr1,  int **ptr2, int *clave, int *clave2 ){
     int  fila=clave[0], fila2=clave2[0];
-    fila-=1; fila2-=1;
+    //fila-=1; fila2-=1;
     int columna=clave[1], columna2=clave2[1];
-    columna-=1; columna2-=1;
+    //columna-=1; columna2-=1;
     if(ptr1[fila][columna]>ptr2[fila2][columna2]){
         return true;
 
@@ -361,3 +370,39 @@ int *candado(int dimencion1, int *posicion1, int *posicion2){
     pr[0]=dimencion2; pr[1]=temp; pr[2]=posicion2[0]; pr[3]=posicion2[1];
     return pr;
 }
+
+
+/*int *candado_menor(int dimencion1, int *posicion1, int *posicion2){
+    int temp=0, dimencion2=dimencion1;  bool verificar, interno=false;
+    while(interno==false){
+        for (int i = 0; i < 4; i++)
+        {
+            int **anterior=matrices(dimencion1, temp);
+            int **siguiente=matrices(dimencion2, i);
+            bool verificar= comparar_matrices_menos(anterior, siguiente, posicion1, posicion2);
+            imprimir_matriz(anterior, dimencion1);
+            cout<<endl;
+            imprimir_matriz(siguiente, dimencion2);
+            cout<<endl;
+            liberar_memoria(anterior, dimencion1);
+            liberar_memoria(siguiente, dimencion2);
+            if (verificar)
+            {
+                dimencion1=dimencion2;
+                temp=i;
+                interno=true;
+                break;
+            }
+
+        }
+
+        if(interno==false){
+            posicion2=buscar_posicion(posicion2, -1);
+            //dimencion2=saber_dimencion_matriz(posicion2);
+            dimencion2=2;
+        }
+    }
+    int *pr=new int[4];
+    pr[0]=dimencion2; pr[1]=temp; pr[2]=posicion2[0]; pr[3]=posicion2[1];
+    return pr;
+}*/
