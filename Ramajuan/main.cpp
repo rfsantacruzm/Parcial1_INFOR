@@ -10,10 +10,10 @@ bool comparar_matrices1(int **ptr1,  int **ptr2, int *clave, int *clave2 );
 bool comparar_matrices_menos(int **ptr1,  int **ptr2, int *clave, int *clave2 );
 void liberar_memoria(int **ptr, int n);
 int **matrices(int n, int rotar);
-int *candado(int dimencion1, int *posicion1, int *posicion2);
+int *candado(int dimencion1, int *posicion1, int *posicion2, int &temp);
 
 int main(){
-    int n,k, con=1, valor1=0, valor2=0;
+    int n,k, con=1, valor1=0, valor2=0, temp1=0;
     int* ptr1 = nullptr;
     cout << "Ingrese el tamano de la clave k: " <<endl;
     cin>> n;
@@ -41,13 +41,13 @@ int main(){
     int clave2[2], temp[2];
     clave2[0]=clave[0]-1; clave2[1]=clave[1]-1; temp[0]=clave[0]-1; temp[1]=clave[1]-1;
     //liberar memoria de clave
-    int *x=new int[k-1];
+    int *x=new int[n-1];
     x[0]=dimencion;
-    int *rotaciones=new int[k-1];
+    int *rotaciones=new int[n-1];
     rotaciones[0]=0;
     for (int i =2 ; i <n ; ++i) {
         if(clave[i]==1){
-            int *pr= candado(dimencion, clave2, temp);
+            int *pr= candado(dimencion, clave2, temp, temp1);
             x[con]=pr[0];
             rotaciones[con]=pr[1];
             clave2[0]=pr[2];
@@ -55,18 +55,35 @@ int main(){
             temp[0]=clave2[0]; temp[1]=clave2[1];
             dimencion=x[con];
             con++;
+            delete[] pr;
         } else if(clave[i]==-1){
 
         }else if (clave[i]==0)
         {
 
         }
+
+        for (int i = 0; i < n-1; i++)
+        {
+            cout<<x[i];
+        }
+        cout<<endl;
+
+        for (int i = 0; i < n-1; i++)
+        {
+            cout<<" "<<rotaciones[i];
+        }
+
+
+
         cout<<x[0]<<" "<<x[1]<<" "<<x[2]<<" "<<x[3]<<" "<<endl;
         cout<<rotaciones[0]<<" "<<rotaciones[1]<<" "<<rotaciones[2]<<" "<<rotaciones[3]<<" "<<endl;
 
     }
 
     delete[] clave;
+    delete[] x;
+    delete[] rotaciones;
     return 0;
 
 }
@@ -336,8 +353,8 @@ int **matrices(int n, int rotar){
 }
 
 
-int *candado(int dimencion1, int *posicion1, int *posicion2){
-    int temp=0, dimencion2=dimencion1;  bool verificar, interno=false;
+int *candado(int dimencion1, int *posicion1, int *posicion2, int &temp){
+    int dimencion2=dimencion1;  bool verificar, interno=false;
     while(interno==false){
         for (int i = 0; i < 4; i++)
         {
