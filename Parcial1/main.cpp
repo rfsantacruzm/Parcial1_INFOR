@@ -407,6 +407,4 @@ int main(){
     delete[] clave;
     delete[] rotaciones;
     delete[] x;
-
-    return 0;
 }
