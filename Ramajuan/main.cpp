@@ -12,8 +12,12 @@ void liberar_memoria(int **ptr, int n);
 int **matrices(int n, int rotar);
 int *candado(int dimencion1, int *posicion1, int *posicion2, int &temp);
 int *candado_menor(int dimencion1, int *posicion1, int *posicion2, int &temp);
-int *candado_igual(int dimencion1, int *posicion1, int *posicion2);
+int *candado_igual(int dimencion1, int *posicion1, int *posicion2, int &temp);
 bool es_en_anillo_exterior(int dimencion, int *posicion);
+
+
+
+
 int main(){
     int n,k, con=1,temp1=0 ;
     //int* ptr1 = nullptr;
@@ -73,7 +77,7 @@ int main(){
             }
         }else if (clave[i]==0)
         {
-            int *pr= candado_igual(dimencion, clave2, temp);
+            int *pr= candado_igual(dimencion, clave2, temp, temp1);
             x[con]=pr[0];
             rotaciones[con]=pr[1];
             clave2[0]=pr[2];
@@ -422,8 +426,8 @@ int *candado(int dimencion1, int *posicion1, int *posicion2, int &temp){
 
 
 
-int *candado_igual(int dimencion1, int *posicion1, int *posicion2){
-    int temp=0, dimencion2=dimencion1;  bool verificar, interno=false;
+int *candado_igual(int dimencion1, int *posicion1, int *posicion2,int &temp ){
+    int dimencion2=dimencion1;  bool verificar, interno=false;
     while(interno==false){
         for (int i = 0; i < 4; i++)
         {
